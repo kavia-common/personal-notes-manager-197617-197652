@@ -1,0 +1,52 @@
+<div class="list">
+  <div class="list-header">
+    <div class="list-title">Notes</div>
+    <div class="list-meta">{{ notes.length }} item(s)</div>
+  </div>
+
+  <div class="items" role="list">
+    @if (notes.length === 0) {
+      <div class="empty">
+        <div class="empty-title">No notes match your search</div>
+        <div class="empty-subtitle">Try a different keyword or create a new note.</div>
+      </div>
+    } @else {
+      @for (note of notes; track note.id) {
+        <a
+          class="item"
+          role="listitem"
+          [class.active]="note.id === selectedId"
+          [routerLink]="['/notes', note.id]"
+        >
+          <div class="item-top">
+            <div class="item-title">{{ note.title || 'Untitled note' }}</div>
+            <div class="item-actions">
+              <button
+                class="icon-btn"
+                type="button"
+                (click)="$event.preventDefault(); $event.stopPropagation(); onDelete(note.id)"
+                aria-label="Delete note"
+                title="Delete"
+              >
+                🗑
+              </button>
+            </div>
+          </div>
+
+          <div class="item-preview">
+            {{ note.content?.slice(0, 90) || 'No content yet…' }}
+          </div>
+
+          <div class="item-bottom">
+            <div class="tags">
+              @for (t of (note.tags ?? []); track t) {
+                <span class="tag">{{ t }}</span>
+              }
+            </div>
+            <div class="date">{{ note.updatedAt | date: 'mediumDate' }}</div>
+          </div>
+        </a>
+      }
+    }
+  </div>
+</div>

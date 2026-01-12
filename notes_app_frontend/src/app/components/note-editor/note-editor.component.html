@@ -1,0 +1,59 @@
+<div class="editor">
+  @if (!note) {
+    <div class="placeholder">
+      <div class="placeholder-title">Select a note</div>
+      <div class="placeholder-subtitle">Choose a note from the list, or create a new one.</div>
+    </div>
+  } @else {
+    <div class="editor-card">
+      <div class="editor-top">
+        <input
+          class="title-input"
+          type="text"
+          [ngModel]="note.title"
+          (ngModelChange)="onTitleChange($event)"
+          placeholder="Note title"
+          aria-label="Note title"
+        />
+
+        <button class="btn btn-danger" type="button" (click)="onDelete()" aria-label="Delete note">
+          Delete
+        </button>
+      </div>
+
+      <div class="meta">
+        <label class="tags">
+          <span class="meta-label">Tags</span>
+          <input
+            type="text"
+            [ngModel]="tagsText(note)"
+            (ngModelChange)="onTagsChange(parseTags($event))"
+            placeholder="e.g. ideas, work, todo"
+          />
+        </label>
+
+        <div class="dates">
+          <div><span class="meta-label">Created</span> {{ note.createdAt | date: 'medium' }}</div>
+          <div><span class="meta-label">Updated</span> {{ note.updatedAt | date: 'medium' }}</div>
+        </div>
+      </div>
+
+      <label class="content">
+        <span class="meta-label">Content (Markdown)</span>
+        <textarea
+          [ngModel]="note.content"
+          (ngModelChange)="onContentChange($event)"
+          placeholder="Write your note in Markdown..."
+          rows="14"
+        ></textarea>
+      </label>
+
+      <div class="help">
+        <div class="help-title">Markdown hints</div>
+        <div class="help-text">
+          Use <code># Heading</code>, <code>**bold**</code>, <code>- list</code>, and <code>```code```</code>.
+        </div>
+      </div>
+    </div>
+  }
+</div>

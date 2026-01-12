@@ -1,0 +1,20 @@
+<app-header
+  [title]="'Ocean Notes'"
+  [searchText]="searchText"
+  (searchTextChange)="onSearchChange($event)"
+  (createNote)="onCreateNote()"
+></app-header>
+
+<main class="shell">
+  <section class="sidebar-col">
+    <app-sidebar />
+  </section>
+
+  <section class="list-col">
+    <app-notes-list [notes]="notes" [selectedId]="selectedId" [onDelete]="onDeleteNote.bind(this)" />
+  </section>
+
+  <section class="editor-col">
+    <router-outlet />
+  </section>
+</main>
